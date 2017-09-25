@@ -17,6 +17,9 @@ server.register([require('inert'), require('vision')], err => {
     },
     relativeTo: __dirname,
     path: './app/views',
+    layoutPath: './app/views/layouts',
+    partialsPath: './app/views/partials',
+    layout: true,
     isCached: false,
   });
 
