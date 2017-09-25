@@ -7,7 +7,6 @@ exports.home = {
 };
 
 exports.signup = {
-
   handler: (request, reply) => {
     reply.file('./app/views/signup.html');
   },
@@ -15,7 +14,6 @@ exports.signup = {
 };
 
 exports.login = {
-
   handler: (request, reply) => {
     reply.file('./app/views/login.html');
   },
