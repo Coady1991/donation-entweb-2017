@@ -52,3 +52,16 @@ exports.register = {
     reply.redirect('/home');
   },
 };
+
+exports.viewSettings = {
+  auth: false,
+  handler: function (request, reply) {
+    reply.view('settings', { title: 'Update your Settings' });
+  },
+};
+
+//exports.updateSettings = {
+
+  // TODO
+
+//};
