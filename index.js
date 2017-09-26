@@ -8,7 +8,7 @@ server.connection({ port: process.env.PORT || 4000 });
 const initUsers = {
   'homer@simpson.com': {
     firstName: 'Homer',
-    lastName: 'Simposon',
+    lastName: 'Simpson',
     email: 'homer@simpson.com',
     password: 'secret',
   },
@@ -21,7 +21,7 @@ const initUsers = {
 };
 
 server.bind({
-  currentUser: {},
+  // currentUser: {},
   users: initUsers,
   donations: [],
 });
@@ -49,6 +49,10 @@ server.register([require('inert'), require('vision'), require('hapi-auth-cookie'
     cookie: 'donation-cookie',
     isSecure: false,
     ttl: 24 * 60 * 60 * 1000,
+  });
+
+  server.auth.default({
+    strategy: 'standard',
   });
 
   server.route(require('./routes'));
