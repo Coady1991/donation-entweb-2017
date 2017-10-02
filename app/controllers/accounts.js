@@ -32,7 +32,7 @@ exports.authenticate = {
       });
       reply.redirect('/home');
     } else {
-      reply.redirect('/singup');
+      reply.redirect('/signup');
     }
   },
 };
@@ -54,14 +54,19 @@ exports.register = {
 };
 
 exports.viewSettings = {
-  auth: false,
   handler: function (request, reply) {
-    reply.view('settings', { title: 'Update your Settings' });
+    var userEmail = request.auth.credentials.loggedInUser;
+    var currentUserDetails = this.users[userEmail];
+    reply.view('settings', { title: 'Edit Account Settings', user: currentUserDetails });
   },
+
 };
 
-//exports.updateSettings = {
+exports.updateSettings = {
+  handler: function (request, reply) {
+    const user = request.payload;
+    this.users[user.email] = user;
+    reply.redirect('/settings');
+  },
 
-  // TODO
-
-//};
+};
