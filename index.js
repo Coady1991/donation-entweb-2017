@@ -20,11 +20,12 @@ const initUsers = {
   },
 };
 
-server.bind({
-  // currentUser: {},
-  users: initUsers,
-  donations: [],
-});
+//server.bind({
+//   currentUser: {},
+//   users: initUsers,
+//   donations: [],
+//});
+require('./app/models/db');
 
 server.register([require('inert'), require('vision'), require('hapi-auth-cookie')], err => {
 
