@@ -24,6 +24,7 @@ exports.report = {
 exports.donate = {
   handler: function (request, reply) {
     let data = request.payload;
+    data.donor = request.auth.credentials.loggedInUser;
     const donation = new Donation(data);
     donation.save().then(newDonation => {
       reply.redirect('/report');
