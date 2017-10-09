@@ -26,6 +26,21 @@ exports.login = {
 
 exports.authenticate = {
   auth: false,
+  validate: {
+    options: {
+      abortEarly: false,
+    },
+    payload: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+    failAction: function (request, reply, source, error) {
+      reply.view('login', {
+        title: 'Login error',
+        errors: error.data.details,
+      }).code(400);
+    },
+  },
   handler: function (request, reply) {
     const user = request.payload;
     User.findOne({ email: user.email }).then(foundUser => {
@@ -36,7 +51,7 @@ exports.authenticate = {
         });
         reply.redirect('/home');
       } else {
-        reply.redirect('/signup');
+        reply.redirect('/login');
       }
     }).catch(err => {
       reply.redirect('/');
