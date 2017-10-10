@@ -6,6 +6,31 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret"
+    },
+    "marge": {
+      "firstName": "Marge",
+      "lastName": "Simpson",
+      "email": "marge@simpson.com",
+      "password": "secret"
+    },
+    "bart": {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret"
+    }
+  },
+  "candidates": {
+    "_model": "Candidate",
+    "lisa": {
+      "firstName": "Lisa",
+      "lastName": "Simpson",
+      "office": "President"
+    },
+    "maggie": {
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "office": "President"
     }
   },
   "donations": {
@@ -13,7 +38,20 @@
     "one": {
       "amount": 40,
       "method": "paypal",
-      "donor": "->users.homer"
+      "donor": "->users.bart",
+      "candidate": "->candidates.lisa"
+    },
+    "two": {
+      "amount": 90,
+      "method": "direct",
+      "donor": "->users.marge",
+      "candidate": "->candidates.lisa"
+    },
+    "three": {
+      "amount": 430,
+      "method": "paypal",
+      "donor": "->users.homer",
+      "candidate": "->candidates.maggie"
     }
   }
 }
