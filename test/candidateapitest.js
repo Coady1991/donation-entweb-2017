@@ -38,4 +38,22 @@ suite('Candidate API tests', function () {
     assert.equal(oneCandidate.office, 'President');
 
   });
+
+  test('create a candidate', function () {
+
+    const candidatesUrl = 'http://localhost:4000/api/candidates';
+    const newCandidate = {
+      firstName: 'Barnie',
+      lastName: 'Grumble',
+      office: 'President',
+    };
+
+    const res = request('POST', candidatesUrl, { json: newCandidate });
+    const returnedCandidate = JSON.parse(res.getBody('utf8'));
+
+    assert.equal(returnedCandidate.firstName, 'Barnie');
+    assert.equal(returnedCandidate.lastName, 'Grumble');
+    assert.equal(returnedCandidate.office, 'President');
+
+  });
 });
