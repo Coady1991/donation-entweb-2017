@@ -20,9 +20,14 @@ exports.home = {
 exports.report = {
   handler: function (request, reply) {
     Donation.find({}).populate('donor').populate('candidate').then(allDonations => {
+      let total = 0;
+      allDonations.forEach(donation => {
+        total += donation.amount;
+      });
       reply.view('report', {
         title: 'Donations to Date',
         donations: allDonations,
+        total: total,
       });
     }).catch(err => {
       reply.redirect('/');
