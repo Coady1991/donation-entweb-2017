@@ -3,6 +3,7 @@
 const Donation = require('../models/donation');
 const User = require('../models/user');
 const Candidate = require('../models/candidate');
+const Joi = require('joi');
 
 exports.home = {
   handler: function (request, reply) {
@@ -36,6 +37,28 @@ exports.report = {
 };
 
 exports.donate = {
+  validate: {
+    payload: {
+      amount: Joi.number().required(),
+      method: Joi.string().required(),
+      candidate: Joi.string().required(),
+    },
+
+    options: {
+      abortEarly: false,
+    },
+
+    failAction: function (request, reply, source, error) {
+      Candidate.find({}).then(candidates => {
+        reply.view('home', {
+          title: 'Invalid Donation',
+          candidates: candidates,
+          errors: error.data.details,
+        }).code(400);
+      });
+    },
+  },
+
   handler: function (request, reply) {
     var userEmail = request.auth.credentials.loggedInUser;
     let userId = null;
