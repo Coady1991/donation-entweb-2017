@@ -24,9 +24,9 @@ exports.findOne = {
     Candidate.findOne({ _id: request.params.id }).then(candidate => {
       if (candidate != null) {
         reply(candidate);
+      } else {
+        reply(Boom.notFound('id not found'));
       }
-
-      reply(Boom.notFound('id not found'));
     }).catch(err => {
       reply(Boom.notFound('id not found'));
     });

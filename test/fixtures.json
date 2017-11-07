@@ -1,4 +1,24 @@
 {
+  "users": [
+    {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret"
+    },
+    {
+      "firstName": "Marge",
+      "lastName": "Simpson",
+      "email": "marge@simpson.com",
+      "password": "secret"
+    },
+    {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret"
+    }
+  ],
   "candidates": [
     {
       "firstName": "Lisa",
@@ -6,7 +26,7 @@
       "office": "President"
     },
     {
-      "firstName": "Donald",
+      "firstName": "Maggie",
       "lastName": "Simpson",
       "office": "President"
     }
@@ -16,5 +36,11 @@
     "firstName": "Barnie",
     "lastName": "Grumble",
     "office": "President"
+  },
+  "newUser": {
+    "firstName": "Grandpa",
+    "lastName": "Simpson",
+    "email": "grandpa@simpson.com",
+    "password": "secret"
   }
 }
