@@ -56,4 +56,32 @@ suite('Candidate API tests', function () {
     assert.equal(returnedCandidate.office, 'President');
 
   });
+
+  test('delete one candidate', function () {
+
+    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
+    const res = request('GET', allCandidatesUrl);
+    const candidates = JSON.parse(res.getBody('utf8'));
+
+    const deleteCandidateUrl = allCandidatesUrl + '/' + candidates[0]._id;
+    request('DELETE', deleteCandidateUrl);
+
+    const candidateList = JSON.parse(request('GET', 'http://localhost:4000/api/candidates').getBody('utf8'));
+
+    assert.equal(2, candidateList.length);
+  });
+
+  test('delete all candidates', function () {
+
+    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
+    const res = request('GET', allCandidatesUrl);
+    const candidates = JSON.parse(res.getBody('utf8'));
+
+    request('DELETE', allCandidatesUrl);
+
+    const candidateList = JSON.parse(request('GET', 'http://localhost:4000/api/candidates').getBody('utf8'));
+
+    assert.equal(0, candidateList.length);
+
+  });
 });
