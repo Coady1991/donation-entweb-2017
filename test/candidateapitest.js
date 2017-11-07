@@ -1,87 +1,21 @@
 'use strict';
 
 const assert = require('chai').assert;
-var request = require('sync-request');
+const DonationService = require('./donation-service');
+const fixtures = require('./fixtures.json');
 
 suite('Candidate API tests', function () {
 
-  test('get candidates', function () {
+  let candidates = fixtures.candidates;
+  let newCandidate = fixtures.newCandidate;
 
-    const url = 'http://localhost:4000/api/candidates';
-    var res = request('GET', url);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(2, candidates.length);
-
-    assert.equal(candidates[0].firstName, 'Lisa');
-    assert.equal(candidates[0].lastName, 'Simpson');
-    assert.equal(candidates[0].office, 'President');
-
-    assert.equal(candidates[1].firstName, 'Maggie');
-    assert.equal(candidates[1].lastName, 'Simpson');
-    assert.equal(candidates[1].office, 'President');
-
-  });
-
-  test('get one candidate', function () {
-
-    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
-    var res = request('GET', allCandidatesUrl);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    const oneCandidateUrl = allCandidatesUrl + '/' + candidates[0]._id;
-    res = request('GET', oneCandidateUrl);
-    const oneCandidate = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(oneCandidate.firstName, 'Lisa');
-    assert.equal(oneCandidate.lastName, 'Simpson');
-    assert.equal(oneCandidate.office, 'President');
-
-  });
+  const donationService = new DonationService('http://localhost:4000');
 
   test('create a candidate', function () {
-
-    const candidatesUrl = 'http://localhost:4000/api/candidates';
-    const newCandidate = {
-      firstName: 'Barnie',
-      lastName: 'Grumble',
-      office: 'President',
-    };
-
-    const res = request('POST', candidatesUrl, { json: newCandidate });
-    const returnedCandidate = JSON.parse(res.getBody('utf8'));
-
-    assert.equal(returnedCandidate.firstName, 'Barnie');
-    assert.equal(returnedCandidate.lastName, 'Grumble');
-    assert.equal(returnedCandidate.office, 'President');
-
-  });
-
-  test('delete one candidate', function () {
-
-    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
-    const res = request('GET', allCandidatesUrl);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    const deleteCandidateUrl = allCandidatesUrl + '/' + candidates[0]._id;
-    request('DELETE', deleteCandidateUrl);
-
-    const candidateList = JSON.parse(request('GET', 'http://localhost:4000/api/candidates').getBody('utf8'));
-
-    assert.equal(2, candidateList.length);
-  });
-
-  test('delete all candidates', function () {
-
-    const allCandidatesUrl = 'http://localhost:4000/api/candidates';
-    const res = request('GET', allCandidatesUrl);
-    const candidates = JSON.parse(res.getBody('utf8'));
-
-    request('DELETE', allCandidatesUrl);
-
-    const candidateList = JSON.parse(request('GET', 'http://localhost:4000/api/candidates').getBody('utf8'));
-
-    assert.equal(0, candidateList.length);
-
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    assert.equal(returnedCandidate.firstName, newCandidate.firstName);
+    assert.equal(returnedCandidate.lastName, newCandidate.lastName);
+    assert.equal(returnedCandidate.office, newCandidate.office);
+    assert.isDefined(returnedCandidate._id);
   });
 });
