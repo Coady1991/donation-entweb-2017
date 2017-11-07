@@ -21,6 +21,14 @@ class DonationService {
     return this.httpService.post('/api/candidates', newCandidate);
   }
 
+  deleteAllCandidates() {
+    return this.httpService.delete('/api/candidates');
+  }
+
+  deleteOneCandidate(id) {
+    return this.httpService.delete('/api/candidates/' + id);
+  }
+
   getUsers() {
     return this.httpService.get('/api/users');
   }
