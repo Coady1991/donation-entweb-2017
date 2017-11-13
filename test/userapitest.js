@@ -48,6 +48,13 @@ suite('User API tests', function () {
     assert.equal(allUsers.length, users.length);
   });
 
+  test('delete a user', function () {
+    const u = donationService.createUser(newUser);
+    assert(donationService.getUser(u._id) != null);
+    donationService.deleteOneUser(u._id);
+    assert(donationService.getUser(u._id) == null);
+  });
+
   test('get users detail', function () {
     for (let u of users) {
       donationService.createUser(u);

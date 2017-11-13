@@ -10,7 +10,7 @@ suite('Candidate API tests', function () {
   let candidates = fixtures.candidates;
   let newCandidate = fixtures.newCandidate;
 
-  const donationService = new DonationService('https://morning-reaches-23036.herokuapp.com/');
+  const donationService = new DonationService('https://glacial-escarpment-91423.herokuapp.com');
 
   beforeEach(function () {
     donationService.deleteAllCandidates();
