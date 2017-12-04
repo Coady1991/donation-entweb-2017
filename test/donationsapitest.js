@@ -7,12 +7,14 @@ const _ = require('lodash');
 
 suite('Donation API tests', function () {
 
+  let users = fixtures.users;
   let donations = fixtures.donations;
   let newCandidate = fixtures.newCandidate;
 
   const donationService = new DonationService('http://localhost:4000');
 
   beforeEach(function () {
+    donationService.login(users[0]);
     donationService.deleteAllCandidates();
     donationService.deleteAllDonations();
   });
@@ -20,6 +22,7 @@ suite('Donation API tests', function () {
   afterEach(function () {
     donationService.deleteAllCandidates();
     donationService.deleteAllDonations();
+    donationService.logout();
   });
 
   test('create a donation', function () {
@@ -43,19 +46,6 @@ suite('Donation API tests', function () {
     }
   });
 
-  test('delete one candidates donations', function () {
-    const returnedCandidate = donationService.createCandidate(newCandidate);
-    for (var i = 0; i < donations.length; i++) {
-      donationService.makeDonation(returnedCandidate._id, donations[i]);
-    }
-
-    const d1 = donationService.getDonations(returnedCandidate._id);
-    assert.equal(d1.length, donations.length);
-    donationService.deleteDonations();
-    const d2 = donationService.getDonations(returnedCandidate._id);
-    assert.equal(d2.length, 0);
-  });
-
   test('delete all donations', function () {
     const returnedCandidate = donationService.createCandidate(newCandidate);
     for (var i = 0; i < donations.length; i++) {
@@ -67,5 +57,16 @@ suite('Donation API tests', function () {
     donationService.deleteAllDonations();
     const d2 = donationService.getDonations(returnedCandidate._id);
     assert.equal(d2.length, 0);
+  });
+
+  test('delete one candidates donations', function () {
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    for (var i = 0; i < donations.length; i++) {
+      donationService.makeDonation(returnedCandidate._id, donations[i]);
+    }
+
+    donationService.deleteDonations(returnedCandidate._id);
+    const d = donationService.getDonations(returnedCandidate._id);
+    assert.equal(d.length, 0);
   });
 });

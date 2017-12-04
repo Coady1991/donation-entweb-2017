@@ -7,17 +7,20 @@ const _ = require('lodash');
 
 suite('Candidate API tests', function () {
 
+  let users = fixtures.users;
   let candidates = fixtures.candidates;
   let newCandidate = fixtures.newCandidate;
 
   const donationService = new DonationService('https://glacial-escarpment-91423.herokuapp.com');
 
   beforeEach(function () {
+    donationService.login(users[0]);
     donationService.deleteAllCandidates();
   });
 
   afterEach(function () {
     donationService.deleteAllCandidates();
+    donationService.logout();
   });
 
   test('create a candidate', function () {
