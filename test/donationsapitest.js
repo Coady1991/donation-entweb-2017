@@ -43,6 +43,19 @@ suite('Donation API tests', function () {
     }
   });
 
+  test('delete one candidates donations', function () {
+    const returnedCandidate = donationService.createCandidate(newCandidate);
+    for (var i = 0; i < donations.length; i++) {
+      donationService.makeDonation(returnedCandidate._id, donations[i]);
+    }
+
+    const d1 = donationService.getDonations(returnedCandidate._id);
+    assert.equal(d1.length, donations.length);
+    donationService.deleteDonations();
+    const d2 = donationService.getDonations(returnedCandidate._id);
+    assert.equal(d2.length, 0);
+  });
+
   test('delete all donations', function () {
     const returnedCandidate = donationService.createCandidate(newCandidate);
     for (var i = 0; i < donations.length; i++) {
