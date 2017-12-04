@@ -2,6 +2,7 @@
 
 const SyncHttpService = require('./sync-http-service');
 const baseUrl = 'http://localhost:4000';
+
 //const baseUrl = 'https://morning-reaches-23036.herokuapp.com/';
 
 class DonationService {
@@ -66,8 +67,12 @@ class DonationService {
     return this.httpService.delete('/api/candidates/' + id + '/donations');
   }
 
-  authenticate(user) {
-    return this.httpService.post('/api/users/authenticate', user);
+  login(user) {
+    return this.httpService.setAuth('/api/users/authenticate', user);
+  }
+
+  logout() {
+    this.httpService.clearAuth();
   }
 }
 
