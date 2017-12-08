@@ -5,9 +5,7 @@ const Boom = require('boom');
 
 exports.find = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
 
   handler: function (request, reply) {
     Candidate.find({}).exec().then(candidates => {

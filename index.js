@@ -7,26 +7,6 @@ const utils = require('./app/api/utils.js');
 var server = new Hapi.Server();
 server.connection({ port: process.env.PORT || 4000 });
 
-const initUsers = {
-  'homer@simpson.com': {
-    firstName: 'Homer',
-    lastName: 'Simpson',
-    email: 'homer@simpson.com',
-    password: 'secret',
-  },
-  'bart@simpson.com': {
-    firstName: 'Bart',
-    lastName: 'Simpson',
-    email: 'bart@simpaon.com',
-    password: 'secret',
-  },
-};
-
-//server.bind({
-//   currentUser: {},
-//   users: initUsers,
-//   donations: [],
-//});
 require('./app/models/db');
 
 server.register([require('inert'), require('vision'), require('hapi-auth-cookie'), require('hapi-auth-jwt2')], err => {

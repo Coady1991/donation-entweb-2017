@@ -2,6 +2,7 @@
 
 const Donation = require('../models/donation');
 const Boom = require('boom');
+const utils = require('./utils.js');
 
 exports.findAllDonations = {
 
@@ -25,7 +26,7 @@ exports.findDonations = {
   },
 
   handler: function (request, reply) {
-    Donation.find({ candidate: request.params.id }).then(donations => {
+    Donation.find({ candidate: request.params.id }).populate('donor').populate('candidate').then(donations => {
       reply(donations);
     }).catch(err => {
       reply(Boom.badImplementation('error accessing db'));
@@ -42,11 +43,14 @@ exports.makeDonation = {
   handler: function (request, reply) {
     const donation = new Donation(request.payload);
     donation.candidate = request.params.id;
+    donation.donor = utils.getUserIdFromRequest(request);
     donation.save().then(newDonation => {
-      reply(newDonation).code(201);
-    }).catch(err => {
-      reply(Boom.badImplementation('error making donation'));
-    });
+        Donation.findOne(newDonation).populate('candidate').then(donation => {
+          reply(donation).code(201);
+        });
+      }).catch(err => {
+        reply(Boom.badImplementation('error making donation'));
+      });
   },
 };
 

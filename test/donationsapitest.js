@@ -30,6 +30,8 @@ suite('Donation API tests', function () {
     donationService.makeDonation(returnedCandidate._id, donations[0]);
     const returnedDonations = donationService.getDonations(returnedCandidate._id);
     assert.equal(returnedDonations.length, 1);
+    assert.isDefined(returnedDonations[0].donor);
+    assert.equal(returnedDonations[0].donor.email, users[0].email);
     assert(_.some([returnedDonations[0]], donations[0]), 'returned donation must be a superset of donation');
   });
 
