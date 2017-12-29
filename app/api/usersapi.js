@@ -6,9 +6,10 @@ const utils = require('./utils.js');
 
 exports.find = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     User.find({}).exec().then(users => {
@@ -21,9 +22,10 @@ exports.find = {
 
 exports.findOne = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     User.findOne({ _id: request.params.id }).then(user => {
@@ -40,9 +42,10 @@ exports.findOne = {
 
 exports.create = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     const user = new User(request.payload);
@@ -56,9 +59,10 @@ exports.create = {
 
 exports.deleteAll = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     User.remove({}).then(err => {
@@ -71,9 +75,10 @@ exports.deleteAll = {
 
 exports.deleteOne = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     User.remove({ _id: request.params.id }).then(user => {
@@ -93,7 +98,7 @@ exports.authenticate = {
     User.findOne({ email: user.email }).then(foundUser => {
       if (foundUser && foundUser.password === user.password) {
         const token = utils.createToken(foundUser);
-        reply({ success: true, token: token }).code(201);
+        reply({ success: true, token: token, user: foundUser }).code(201);
       } else {
         reply({ success: false, message: 'Authentication failed. User not found.' }).code(201);
       }

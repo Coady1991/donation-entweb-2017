@@ -18,9 +18,10 @@ exports.find = {
 
 exports.findOne = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Candidate.findOne({ _id: request.params.id }).then(candidate => {
@@ -37,9 +38,10 @@ exports.findOne = {
 
 exports.create = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     const candidate = new Candidate(request.payload);
@@ -53,9 +55,10 @@ exports.create = {
 
 exports.deleteAll = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Candidate.remove({}).then(err => {
@@ -68,9 +71,10 @@ exports.deleteAll = {
 
 exports.deleteOne = {
 
-  auth: {
-    strategy: 'jwt',
-  },
+  auth: false,
+  // auth: {
+  //   strategy: 'jwt',
+  // },
 
   handler: function (request, reply) {
     Candidate.remove({ _id: request.params.id }).then(candidate => {
